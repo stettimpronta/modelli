@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Policy Hub - Impronta Group</title>
     <style>
+        /* Stili globali e variabili CSS */
         * {
             margin: 0;
             padding: 0;
@@ -35,6 +36,7 @@
             padding: 20px;
         }
         
+        /* Stili per l'header */
         header {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
@@ -50,6 +52,7 @@
             padding: 16px 0;
         }
         
+        /* Stili per il selettore di ruolo (homepage) */
         .role-selector {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -88,6 +91,7 @@
             color: var(--gray-500);
         }
         
+        /* Stili per il contenuto dei processi (nascosto/attivo) */
         .process-content {
             display: none;
         }
@@ -102,6 +106,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Stili per il breadcrumb */
         .breadcrumb {
             background: white;
             padding: 16px 20px;
@@ -112,6 +117,7 @@
             display: inline-block;
         }
         
+        /* Stili per le sezioni informative */
         .info-section {
             background: white;
             padding: 32px;
@@ -126,6 +132,7 @@
             margin-bottom: 20px;
         }
         
+        /* Stili per le checklist */
         .checklist {
             list-style: none;
         }
@@ -176,6 +183,7 @@
             top: 4px;
         }
         
+        /* Stili per il selettore di fase */
         .phase-selector {
             display: flex;
             gap: 12px;
@@ -199,6 +207,7 @@
             color: var(--primary);
         }
         
+        /* Stili per i suggerimenti (tips) */
         .tip {
             background: #E3F2FD;
             padding: 20px;
@@ -206,8 +215,10 @@
             margin-top: 24px;
             font-size: 15px;
             border-left: 4px solid var(--primary);
+            color: var(--gray-700);
         }
         
+        /* Stili per il pulsante "Indietro" */
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -229,6 +240,7 @@
             transform: translateX(-4px);
         }
         
+        /* Media queries per la responsività */
         @media (max-width: 768px) {
             .container { padding: 16px; }
             .role-selector { grid-template-columns: 1fr; }
@@ -245,7 +257,7 @@
     </header>
     
     <div class="container">
-        <!-- Home -->
+        <!-- Home Page -->
         <div id="home" class="process-content active">
             <h2 style="margin: 32px 0 8px; font-size: 48px; font-weight: 700;">Benvenuto</h2>
             <p style="font-size: 22px; color: var(--gray-500); margin-bottom: 40px;">Seleziona il tuo ruolo per accedere alle guide operative</p>
@@ -269,7 +281,7 @@
             </div>
         </div>
         
-        <!-- BD Home -->
+        <!-- Business Developer Home Page -->
         <div id="bd-home" class="process-content">
             <a href="#" class="back-btn" onclick="goHome()">← Home</a>
             <h2 style="margin-bottom: 32px;">Business Developer - Seleziona la fase</h2>
@@ -278,10 +290,12 @@
                 <button class="phase-btn" onclick="showProcess('bd-opportunita')">📌 Nuova Opportunità</button>
                 <button class="phase-btn" onclick="showProcess('bd-gara')">🏆 Gestione Gara</button>
                 <button class="phase-btn" onclick="showProcess('bd-handoff')">🤝 Handoff al PM</button>
+                <button class="phase-btn" onclick="showProcess('bd-chiusura-gara')">✅ Chiusura Gara</button>
+                <button class="phase-btn" onclick="showProcess('bd-soddisfazione-cliente')">⭐ Soddisfazione Cliente</button>
             </div>
         </div>
         
-        <!-- BD Opportunità -->
+        <!-- BD - Nuova Opportunità (Management Meeting) -->
         <div id="bd-opportunita" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('bd')">← Fasi BD</a>
             
@@ -314,6 +328,9 @@
                         <span>Prepara presentazione per management meeting</span>
                     </li>
                 </ul>
+                <div class="tip">
+                    💡 <strong>Tip:</strong> La decisione GO/NO-GO non è solo tua. Il management meeting serve a valutare insieme.
+                </div>
             </div>
             
             <div class="info-section">
@@ -321,25 +338,61 @@
                 <ul class="checklist">
                     <li>
                         <div class="checkbox" onclick="toggleCheck(this)"></div>
-                        <span>Crea Lead in CRM (sempre da P.IVA!)</span>
+                        <span>Inserisci nuovo lead in CRM (sempre partendo da P.IVA!)</span>
                     </li>
                     <li>
                         <div class="checkbox" onclick="toggleCheck(this)"></div>
-                        <span>Crea Opportunità collegata</span>
+                        <span>Verifica automatica duplicati tramite P.IVA</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Compila dati obbligatori: nome azienda, P.IVA, email, settore, classe fatturato, origine lead</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Status iniziale automatico: "Prospect"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Crea nuova opportunità collegata al lead</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Inserisci descrizione opportunità</span>
                     </li>
                     <li>
                         <div class="checkbox" onclick="toggleCheck(this)"></div>
                         <span>Imposta valore stimato</span>
                     </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Definisci percentuale di successo iniziale</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Account di riferimento (auto-assegnazione se non admin)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Stato iniziale: "Aperta"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna opportunità con to-do list veloce post-meeting</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>All'apertura codice, creare cartella Drive corrispondente</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Annotare in Chronos il percorso cartella Drive</span>
+                    </li>
                 </ul>
-                
-                <div class="tip">
-                    💡 <strong>Tip:</strong> La decisione GO/NO-GO non è solo tua. Il management meeting serve a valutare insieme.
-                </div>
             </div>
         </div>
         
-        <!-- BD Gara -->
+        <!-- BD - Gestione Gara (Pre-Kickoff) -->
         <div id="bd-gara" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('bd')">← Fasi BD</a>
             
@@ -372,14 +425,63 @@
                         <span>Trasferisci aspettative dichiarate e implicite</span>
                     </li>
                 </ul>
+                <div class="tip">
+                    💡 <strong>Tip:</strong> Non interferire nell'operativo ma rimani disponibile per chiarimenti.
+                </div>
             </div>
             
-            <div class="tip">
-                💡 <strong>Tip:</strong> Non interferire nell'operativo ma rimani disponibile per chiarimenti.
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna stato opportunità → "In preventivo"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Una volta qualificata, importa in anagrafica (Azioni > Importa)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Status cliente cambia da "Prospect" a "Potenziale"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Collega PM all'opportunità</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna valore stimato se necessario</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiungi note con preferenze cliente emerse</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Imposta reminder per follow-up cliente</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Categoria "Gara" per attività speculative</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Inserire riga "Costi sostenuti/Timesheet" per gare</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Annotare percorso Drive dove è archiviato Excel costi</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Archiviare preventivi Excel per gare</span>
+                    </li>
+                </ul>
             </div>
         </div>
         
-        <!-- BD Handoff -->
+        <!-- BD - Handoff al PM -->
         <div id="bd-handoff" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('bd')">← Fasi BD</a>
             
@@ -409,21 +511,129 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Quando offerta pronta, collega progetto all'opportunità</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna stato opportunità → "In trattativa"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Conferma PM come responsabile progetto</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiungi nota su avvenuto passaggio consegne</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- BD - Chiusura Gara -->
+        <div id="bd-chiusura-gara" class="process-content">
+            <a href="#" class="back-btn" onclick="showRole('bd')">← Fasi BD</a>
+            
+            <div class="breadcrumb">
+                📍 BD → Chiusura Gara
+            </div>
+            
+            <div class="info-section">
+                <h3>👤 Cosa ci si aspetta da te</h3>
+                <p>Documenta l'esito della gara e le lezioni apprese per migliorare i processi futuri.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna stato opportunità → "Positiva" (se vinta) o "Negativa" (se persa)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Se vinta, trasferisci a categoria "Standard"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Se persa, documenta lessons learned</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna note con cause vittoria/perdita</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Categoria "Gara persa" per tracking investimenti</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>In caso gara persa, aggiornare annotazioni con ricavi/costi presunti</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- BD - Soddisfazione Cliente -->
+        <div id="bd-soddisfazione-cliente" class="process-content">
+            <a href="#" class="back-btn" onclick="showRole('bd')">← Fasi BD</a>
+            
+            <div class="breadcrumb">
+                📍 BD → Post-Progetto → Soddisfazione Cliente
+            </div>
+            
+            <div class="info-section">
+                <h3>👤 Cosa ci si aspetta da te</h3>
+                <p>Raccogli feedback dal cliente e identifica nuove opportunità di business.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Documenta feedback cliente (NPS)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Crea nuove opportunità per progetti follow-up</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna stato cliente se necessario</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Carica caso studio quando pronto</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Imposta reminder per follow-up futuro</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         
-        <!-- PM Home -->
+        <!-- Project Manager Home Page -->
         <div id="pm-home" class="process-content">
             <a href="#" class="back-btn" onclick="goHome()">← Home</a>
             <h2 style="margin-bottom: 32px;">Project Manager - Seleziona la fase</h2>
             
             <div class="phase-selector">
                 <button class="phase-btn" onclick="showProcess('pm-ricezione')">🤝 Ricezione da BD</button>
+                <button class="phase-btn" onclick="showProcess('pm-pre-kickoff')">📝 Pre-Kickoff Esecuzione</button>
                 <button class="phase-btn" onclick="showProcess('pm-kickoff')">🚀 Kickoff Esecutivo</button>
                 <button class="phase-btn" onclick="showProcess('pm-gestione')">⚡ Gestione Progetto</button>
+                <button class="phase-btn" onclick="showProcess('pm-chiusura-progetto')">✅ Chiusura Progetto</button>
             </div>
         </div>
         
-        <!-- PM Ricezione -->
+        <!-- PM - Ricezione Progetto -->
         <div id="pm-ricezione" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('pm')">← Fasi PM</a>
             
@@ -453,9 +663,99 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Verifica cliente già in anagrafica come "Potenziale"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Vai in Vendite > Progetti</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Verifica di essere assegnato come PM</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Controlla categoria progetto (Standard/Gara)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Valida budget caricato vs discussioni</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiungi prime note su stato progetto</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PM - Pre-Kickoff Esecuzione -->
+        <div id="pm-pre-kickoff" class="process-content">
+            <a href="#" class="back-btn" onclick="showRole('pm')">← Fasi PM</a>
+            
+            <div class="breadcrumb">
+                📍 PM → Pre-Kickoff → Preparazione Esecuzione
+            </div>
+            
+            <div class="info-section">
+                <h3>👤 Cosa ci si aspetta da te</h3>
+                <p>Prepara il terreno per l'esecuzione del progetto, definendo le attività e allocando le risorse.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Clicca "Inserisci progetto"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Seleziona cliente dalla tendina</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Inserisci oggetto/descrizione progetto</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Scegli categoria appropriata (Standard per progetti confermati)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Per ogni attività: descrizione e centro di ricavo</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Budget totale attività</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Assegna risorse umane con costo orario</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiungi fornitori esterni previsti</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Rivedi marginalità progetto</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Pianifica allocazione risorse</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         
-        <!-- PM Kickoff -->
+        <!-- PM - Kickoff Esecutivo -->
         <div id="pm-kickoff" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('pm')">← Fasi PM</a>
             
@@ -491,17 +791,37 @@
                 <ul class="checklist">
                     <li>
                         <div class="checkbox" onclick="toggleCheck(this)"></div>
-                        <span>Imposta data consegna</span>
+                        <span><strong>IMPOSTA DATA CONSEGNA</strong> (genera automaticamente commesse)</span>
                     </li>
                     <li>
                         <div class="checkbox" onclick="toggleCheck(this)"></div>
-                        <span>Assegna team alle commesse</span>
+                        <span>Allinea budget e tempi finali confermati</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Assegna team alle commesse operative</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Imposta milestone principali</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Attiva monitoraggio timesheet</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Carica verbale kickoff</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Le commesse appaiono in: Timesheet, Planning, Fornitori, Trasferte</span>
                     </li>
                 </ul>
             </div>
         </div>
         
-        <!-- PM Gestione -->
+        <!-- PM - Gestione Operativa -->
         <div id="pm-gestione" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('pm')">← Fasi PM</a>
             
@@ -535,20 +855,160 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Monitora timesheet team vs budget (Dashboard > Timesheet)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Controlla marginalità in tempo reale</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Traccia avanzamento deliverable</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna planning risorse con Scheduler</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Carica verbali SAL</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Segnala alert su budget/tempi</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Dashboard > Progress per panoramica commesse</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Dashboard > Staffing per controllo risorse</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Dashboard > Scheduler per pianificazione</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Modalità per persona: click giorno → assegna commessa</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Modalità per commessa: filtra cliente → distribuisci ore</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Planning si aggiorna automaticamente con timesheet reali</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PM - Chiusura Progetto -->
+        <div id="pm-chiusura-progetto" class="process-content">
+            <a href="#" class="back-btn" onclick="showRole('pm')">← Fasi PM</a>
+            
+            <div class="breadcrumb">
+                📍 PM → Chiusura → Completamento Progetto
+            </div>
+            
+            <div class="info-section">
+                <h3>👤 Cosa ci si aspetta da te</h3>
+                <p>Assicurati che tutte le attività siano concluse e documentate, e che il progetto sia formalmente chiuso in Chronos.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Chiudi commesse operative (stato → "Terminata")</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Imposta scadenziario fatturazione (Azioni > Pianificazione)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Coordina con amministrazione per fatture</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna stato progetto → "Completato"</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Carica report finale</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Verifica marginalità finale vs preventivo</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Le commesse chiuse spariscono dal planning attivo</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         
-        <!-- COO Home -->
+        <!-- Head of Operations Home Page -->
         <div id="coo-home" class="process-content">
             <a href="#" class="back-btn" onclick="goHome()">← Home</a>
             <h2 style="margin-bottom: 32px;">Head of Operations - Aree di supporto</h2>
             
             <div class="phase-selector">
+                <button class="phase-btn" onclick="showProcess('coo-qualifica-opportunita')">📈 Qualifica Opportunità</button>
                 <button class="phase-btn" onclick="showProcess('coo-supporto')">🤝 Supporto PM</button>
                 <button class="phase-btn" onclick="showProcess('coo-escalation')">⚠️ Gestione Escalation</button>
+                <button class="phase-btn" onclick="showProcess('coo-miglioramento-processi')">⚙️ Miglioramento Processi</button>
+            </div>
+        </div>
+
+        <!-- COO - Qualifica Opportunità -->
+        <div id="coo-qualifica-opportunita" class="process-content">
+            <a href="#" class="back-btn" onclick="showRole('coo')">← Aree COO</a>
+            
+            <div class="breadcrumb">
+                📍 COO → Supporto BD → Qualifica Opportunità
+            </div>
+            
+            <div class="info-section">
+                <h3>👤 Cosa ci si aspetta da te</h3>
+                <p>Fornisci supporto strategico al Business Developer nella valutazione e qualificazione delle opportunità, assicurando l'allineamento con la capacità operativa.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Supporta BD in to-do list pre-kickoff</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Verifica capacity planning team (Dashboard > Staffing)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Segnala conflitti risorse potenziali</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Suggerisce PM tramite vista allocazioni</span>
+                    </li>
+                </ul>
             </div>
         </div>
         
-        <!-- COO Supporto -->
+        <!-- COO - Supporto PM -->
         <div id="coo-supporto" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('coo')">← Aree COO</a>
             
@@ -578,9 +1038,31 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Monitora dashboard progetti (vista aggregata)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Identifica progetti a rischio da KPI</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>NON modifica dati progetti senza consenso PM</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Traccia pattern per miglioramenti sistemici</span>
+                    </li>
+                </ul>
+            </div>
         </div>
         
-        <!-- COO Escalation -->
+        <!-- COO - Gestione Escalation -->
         <div id="coo-escalation" class="process-content">
             <a href="#" class="back-btn" onclick="showRole('coo')">← Aree COO</a>
             
@@ -610,31 +1092,95 @@
                     </li>
                 </ul>
             </div>
+            
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Documenta decisioni prese in caso escalation</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Aggiorna budget/timeline se modificati (>10%)</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Traccia pattern escalation per prevenzione</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COO - Miglioramento Processi -->
+        <div id="coo-miglioramento-processi" class="process-content">
+            <a href="#" class="back-btn" onclick="showRole('coo')">← Aree COO</a>
+            
+            <div class="breadcrumb">
+                📍 COO → Analisi → Miglioramento Processi
+            </div>
+            
+            <div class="info-section">
+                <h3>👤 Cosa ci si aspetta da te</h3>
+                <p>Analizza i dati aggregati per identificare aree di miglioramento nei processi operativi e proporre ottimizzazioni.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🔄 Update Chronos</h3>
+                <ul class="checklist">
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Analizza KPI aggregati progetti</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Identifica trend marginalità</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Monitora efficienza team</span>
+                    </li>
+                    <li>
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <span>Proponi ottimizzazioni sistema</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     
     <script>
+        // Funzione per mostrare la homepage di un ruolo specifico
         function showRole(role) {
+            // Nasconde tutti i contenuti dei processi
             document.querySelectorAll('.process-content').forEach(el => {
                 el.classList.remove('active');
             });
+            // Mostra la homepage del ruolo selezionato
             document.getElementById(role + '-home').classList.add('active');
         }
         
+        // Funzione per mostrare un processo specifico all'interno di un ruolo
         function showProcess(processId) {
+            // Nasconde tutti i contenuti dei processi
             document.querySelectorAll('.process-content').forEach(el => {
                 el.classList.remove('active');
             });
+            // Mostra il processo specifico selezionato
             document.getElementById(processId).classList.add('active');
         }
         
+        // Funzione per tornare alla homepage principale
         function goHome() {
+            // Nasconde tutti i contenuti dei processi
             document.querySelectorAll('.process-content').forEach(el => {
                 el.classList.remove('active');
             });
+            // Mostra la homepage principale
             document.getElementById('home').classList.add('active');
         }
         
+        // Funzione per attivare/disattivare la spunta di una checkbox
         function toggleCheck(checkbox) {
             checkbox.classList.toggle('checked');
         }
