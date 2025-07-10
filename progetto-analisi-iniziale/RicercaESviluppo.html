@@ -1,268 +1,256 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovazione e Sviluppo nel Settore Farmaceutico | Impronta Advance</title>
+    <title>Analisi Strategica R&S Farmaceutico | Impronta Advance</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Serene Blues (Almond, Light Taupe, Dusty Blue, Slate Blue) -->
+    <!-- Application Structure Plan: A narrative, single-page scroll revealing the story. 1. Hero: Market size & the core data gap. 2. Ecosystem Map: Interactive diagram showing the disconnection. 3. Interactive Deep Dive: A tabbed interface to explore specific stakeholder needs (Pharmacists, Doctors, Patients) with dedicated stats and charts. 4. Tech Solutions: Connecting problems to solutions (AI, Geo, Automation). 5. Conclusion: Impronta's value proposition. This structure guides the user from the macro problem to micro needs and finally to concrete solutions, enhancing understanding and engagement over a linear report format. -->
+    <!-- Visualization & Content Choices: 
+        - Market Value (€34B): Goal: Inform -> Big Number (HTML/CSS) -> Justification: High impact for a key metric.
+        - Ecosystem Map: Goal: Organize -> Flowchart (HTML/CSS) -> Justification: Visually explains the complex relationships and the central "data gap" problem.
+        - Stakeholder Needs (interactive tabs): Goal: Compare/Inform -> JS Tabs + Charts (Chart.js) -> Justification: Allows user-driven exploration of specific pain points, making dense data digestible.
+        - Pharmacist Dissatisfaction (74%): Goal: Inform -> Donut Chart (Chart.js) -> Justification: Clear part-to-whole visualization.
+        - GP Shortage (5.5k -> 10k): Goal: Change/Compare -> Bar Chart (Chart.js) -> Justification: Effectively shows the worsening trend.
+        - Tech Solutions: Goal: Organize -> Card Grid with Icons (Unicode/HTML/CSS) -> Justification: Clean, scannable overview of the key enablers.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d1a2e; /* Deep dark blue */
+            background-color: #F5F0E8; /* Light Almond */
+            font-family: 'Roboto', sans-serif;
+            color: #3D405B; /* Dark Slate Blue */
+        }
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
         }
         .chart-container {
             position: relative;
+            margin: auto;
+            height: 280px;
             width: 100%;
-            max-width: 450px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 350px;
+            max-width: 400px;
         }
-        .kpi-card {
-            background-color: #004AAD;
-            color: white;
-            border: 2px solid #0079C2;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
         }
-        .kpi-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 121, 194, 0.3);
+        .nav-link:hover, .nav-link.active {
+            color: #8D99AE; /* Dusty Blue */
+            border-bottom-color: #8D99AE;
         }
-        .flow-line {
-            background-color: #0079C2;
-            min-height: 2px;
-            width: 100%;
+        .tab-button {
+            transition: all 0.3s ease;
         }
-        .flow-line-vertical {
-            background-color: #0079C2;
-            width: 2px;
-            height: 100%;
-            min-height: 30px;
-        }
-        .flow-node {
-            border: 2px solid #00A7E1;
-            background-color: #0d1a2e;
+        .tab-button.active {
+            background-color: #3D405B;
             color: #FFFFFF;
-        }
-        .accent-text {
-            color: #88D9F2;
-        }
-        .header-bg {
-            background: linear-gradient(135deg, #004AAD 0%, #00A7E1 100%);
         }
     </style>
 </head>
-<body class="text-gray-200">
+<body>
 
-    <!-- Confirmation that NEITHER Mermaid JS NOR SVG were used anywhere in the output. -->
-    <!-- Chosen color palette: Brilliant Blues (#004AAD, #0079C2, #00A7E1, #88D9F2). -->
-    <!-- Infographic Narrative Plan: 
-        1. Hook: Italian Pharma market stats & the core data challenge.
-        2. Ecosystem Map: Visualize stakeholder relationships.
-        3. Unmet Needs: Data on HCP and patient frustrations.
-        4. Tech Solutions: Showcase Automation, Geo, AI benefits.
-        5. Strategic Path: Present future opportunities and Impronta's role. -->
-    <!-- Visualization Choices (NO SVG/Mermaid):
-        - Market Value: Big Number (HTML/CSS). Goal: Inform.
-        - Stakeholder Map: Flow Chart (HTML/CSS Flexbox). Goal: Organize.
-        - Pharmacist Dissatisfaction: Donut Chart (Chart.js). Goal: Inform.
-        - GP Shortage: Bar Chart (Chart.js). Goal: Compare.
-        - Cost of Non-Adherence: Big Number (HTML/CSS). Goal: Inform.
-        - Tech Pillars: Icon cards (Unicode + HTML/CSS). Goal: Organize. -->
-
-    <header class="header-bg text-white p-6 md:p-10 text-center shadow-lg">
-        <h1 class="text-4xl md:text-5xl font-black mb-2">Progetto R&S Farmaceutico</h1>
-        <p class="text-xl md:text-2xl font-light">Navigare la Complessità, Guidare l'Innovazione: la Strategia per Impronta Advance</p>
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-[#3D405B]">Impronta Advance | Analisi Strategica</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#opportunity" class="nav-link">Opportunità</a>
+                <a href="#ecosystem" class="nav-link">Ecosistema</a>
+                <a href="#needs" class="nav-link">Bisogni</a>
+                <a href="#solutions" class="nav-link">Soluzioni</a>
+            </div>
+        </nav>
     </header>
 
-    <main class="container mx-auto p-4 md:p-8">
-        
-        <section id="opportunity" class="text-center mb-16">
-            <h2 class="text-3xl font-bold mb-4">L'Opportunità in un Mercato Leader</h2>
-            <p class="max-w-3xl mx-auto mb-8 text-lg">
-                L'Italia è leader nella produzione farmaceutica europea, ma le aziende affrontano una sfida cruciale: i vincoli normativi limitano l'accesso a dati aggiornati sui bisogni reali di medici, farmacisti e pazienti. Questa lacuna è l'opportunità per Impronta Advance di diventare un partner strategico indispensabile.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="kpi-card rounded-lg p-6 flex flex-col justify-center items-center">
-                    <span class="text-5xl font-black">€34 Mld</span>
-                    <span class="mt-2 text-center text-lg">Valore della Produzione Farmaceutica Italiana</span>
-                </div>
-                <div class="kpi-card rounded-lg p-6 flex flex-col justify-center items-center">
-                    <span class="text-5xl font-black">80%</span>
-                    <span class="mt-2 text-center text-lg">Dell'innovazione farmaceutica deriva da partnership strategiche</span>
+    <main>
+        <section id="opportunity" class="py-16 md:py-24 text-center">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">L'Opportunità da 34 Miliardi e il Vuoto di Dati</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-700 mb-12">
+                    Il settore farmaceutico italiano è un leader europeo, ma le aziende affrontano una sfida cruciale: i vincoli normativi ed etici impediscono l'accesso a dati aggiornati sui bisogni reali di medici, farmacisti e pazienti. Questa lacuna informativa rappresenta un'opportunità strategica unica per Impronta Advance.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <div class="text-5xl font-bold text-[#8D99AE]">€34 Mld</div>
+                        <p class="mt-2 text-gray-600">Valore della Produzione Farmaceutica in Italia</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <div class="text-5xl font-bold text-[#8D99AE]">80%</div>
+                        <p class="mt-2 text-gray-600">Dell'innovazione farmaceutica deriva da partnership esterne</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="ecosystem" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">Mappatura dell'Ecosistema e del Flusso Informativo</h2>
-            <div class="bg-gray-800 rounded-xl p-6 shadow-2xl">
-                <p class="text-center mb-6 text-lg">Le aziende farmaceutiche operano in una rete complessa. La difficoltà nel raccogliere dati diretti crea un "vuoto informativo" che Impronta Advance può colmare.</p>
-                <div class="flex flex-col items-center space-y-4">
-                    <div class="flow-node p-4 rounded-lg text-center shadow-lg w-full md:w-1/2">
-                        <h3 class="font-bold text-xl">Aziende Farmaceutiche</h3>
-                        <p class="text-sm">(Angelini, Menarini, GSK)</p>
+        <section id="ecosystem" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">La Disconnessione nell'Ecosistema</h2>
+                <p class="max-w-3xl mx-auto text-lg text-center text-gray-700 mb-12">
+                    Le aziende farmaceutiche operano in una rete complessa. La difficoltà nel raccogliere dati diretti, a causa di un rigido quadro normativo, crea un "vuoto informativo" che impedisce di comprendere appieno le reali necessità degli stakeholder finali. Impronta Advance si posiziona per colmare questo gap.
+                </p>
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="bg-slate-100 p-4 rounded-lg text-center shadow-md border w-full md:w-1/2">
+                        <h3 class="font-bold text-xl text-[#3D405B]">Aziende Farmaceutiche</h3>
+                        <p class="text-sm text-gray-600">(Angelini, Menarini, GSK)</p>
                     </div>
-                    <div class="flow-line-vertical"></div>
-                    <div class="w-full md:w-3/4 p-4 rounded-lg bg-gray-900 shadow-inner">
-                        <h4 class="font-bold text-center text-lg mb-4 accent-text">DECISION MAKERS INTERNI</h4>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-sm">
-                            <p>Marketing Mgr</p>
-                            <p>Chief Innovation Officer</p>
-                            <p>CTO</p>
-                            <p>Responsabili Comunicazione</p>
+                    <div class="w-1 bg-gray-300 h-8"></div>
+                    <div class="relative w-full flex justify-center items-center h-24">
+                        <div class="absolute w-full h-1 bg-gray-300"></div>
+                        <div class="absolute left-0 w-1/2 h-full flex flex-col items-end pr-8 justify-center">
+                            <div class="h-full w-1 bg-gray-300"></div>
+                        </div>
+                        <div class="absolute right-0 w-1/2 h-full flex flex-col items-start pl-8 justify-center">
+                           <div class="h-full w-1 bg-gray-300"></div>
+                        </div>
+                        <div class="relative z-10 p-4 rounded-lg text-center bg-red-100 border-2 border-dashed border-red-500 shadow-xl">
+                            <h3 class="font-bold text-lg text-red-700">Vuoto Informativo</h3>
+                            <p class="text-sm text-red-600">Vincoli Etici & Normativi</p>
                         </div>
                     </div>
-                    <div class="w-full flex items-center">
-                        <div class="flow-line flex-1"></div>
-                        <div class="relative p-4 rounded-full flow-node z-10 mx-4 shadow-lg">
-                            <h3 class="font-bold text-lg accent-text">!</h3>
-                            <div class="absolute inset-0 border-2 border-red-500 rounded-full animate-ping"></div>
-                            <p class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 text-center bg-red-600 text-white text-xs font-bold py-1 px-2 rounded-md shadow-lg">Vouto Informativo</p>
+                    <div class="w-1 bg-gray-300 h-8"></div>
+                    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-8">
+                         <div class="bg-slate-100 p-4 rounded-lg text-center shadow-md border">
+                            <h3 class="font-bold text-xl text-[#3D405B]">Medici</h3>
+                            <p class="text-sm text-gray-600">di Base e Specialisti</p>
                         </div>
-                        <div class="flow-line flex-1"></div>
-                    </div>
-                    
-                    <div class="relative w-full p-4 rounded-lg text-center my-4">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-teal-500 text-white font-bold py-2 px-6 rounded-full shadow-lg z-20">
-                            Impronta Advance: Ricerca Diretta
+                         <div class="bg-slate-100 p-4 rounded-lg text-center shadow-md border">
+                            <h3 class="font-bold text-xl text-[#3D405B]">Farmacisti</h3>
+                            <p class="text-sm text-gray-600">e Personale di Farmacia</p>
                         </div>
-                        <div class="border-4 border-dashed border-teal-500 rounded-lg p-6 pt-12 flex flex-col md:flex-row justify-around items-center gap-4">
-                            <div class="flow-node p-3 rounded-lg text-center shadow-md">
-                                <h3 class="font-bold">Medici</h3>
-                                <p class="text-sm">(di Base e Specialisti)</p>
-                            </div>
-                            <div class="flow-node p-3 rounded-lg text-center shadow-md">
-                                <h3 class="font-bold">Farmacisti</h3>
-                                <p class="text-sm">(e Personale Farmacia)</p>
-                            </div>
-                            <div class="flow-node p-3 rounded-lg text-center shadow-md">
-                                <h3 class="font-bold">Pazienti</h3>
-                                <p class="text-sm">(es. Oncologici)</p>
-                            </div>
-                             <div class="flow-node p-3 rounded-lg text-center shadow-md">
-                                <h3 class="font-bold">Caregiver</h3>
-                                <p class="text-sm">(Familiari)</p>
-                            </div>
+                         <div class="bg-slate-100 p-4 rounded-lg text-center shadow-md border">
+                            <h3 class="font-bold text-xl text-[#3D405B]">Pazienti & Caregiver</h3>
+                            <p class="text-sm text-gray-600">(es. Oncologici)</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="unmet-needs" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">Bisogni Insoddisfatti e Frustrazioni</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <section id="needs" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Voci dal Campo: Bisogni e Frustrazioni</h2>
+                <p class="max-w-3xl mx-auto text-lg text-center text-gray-700 mb-12">
+                   Analizzando da vicino le sfide quotidiane degli attori chiave, emergono bisogni chiari e insoddisfatti. Seleziona uno stakeholder per esplorare i dati e scoprire dove l'innovazione può avere il maggiore impatto.
+                </p>
 
-                <div class="bg-white/10 rounded-lg p-6 shadow-xl flex flex-col">
-                    <h3 class="text-2xl font-bold mb-4 text-center">La Crisi degli Operatori Sanitari</h3>
-                    <p class="text-center mb-6">Carenza di personale e insoddisfazione mettono a dura prova il sistema sanitario.</p>
-                    <div class="flex-grow flex flex-col justify-center space-y-8">
+                <div class="flex justify-center mb-8 space-x-2 md:space-x-4">
+                    <button class="tab-button active text-sm md:text-base font-bold py-2 px-4 rounded-full" data-tab="pharmacists">💊 Farmacisti</button>
+                    <button class="tab-button text-sm md:text-base font-bold py-2 px-4 rounded-full" data-tab="doctors">🩺 Medici</button>
+                    <button class="tab-button text-sm md:text-base font-bold py-2 px-4 rounded-full" data-tab="patients">❤️ Pazienti & Caregiver</button>
+                </div>
+
+                <div id="pharmacistsContent" class="tab-content">
+                    <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div>
-                            <h4 class="text-lg font-bold text-center mb-2">Insoddisfazione Retributiva dei Farmacisti</h4>
-                             <div class="chart-container h-48">
-                                <canvas id="pharmacistChart"></canvas>
-                            </div>
+                            <h3 class="text-2xl font-bold mb-4">La Crisi Silenziosa della Farmacia</h3>
+                            <p class="text-gray-700 mb-2">Una carenza crescente di personale e un'elevata insoddisfazione retributiva mettono a dura prova le farmacie italiane. Il carico burocratico e operativo lascia poco tempo per il ruolo cruciale di consulenza al paziente.</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>**74%** dei collaboratori è insoddisfatto della retribuzione.</li>
+                                <li>**80%** dei farmacisti iscritti all'ordine sono donne, con esigenze di welfare specifiche.</li>
+                                <li>L'automazione può liberare il **100%** del tempo del farmacista per dedicarlo ai clienti.</li>
+                            </ul>
                         </div>
                         <div>
-                            <h4 class="text-lg font-bold text-center mb-2">Carenza Prevista di Medici di Base</h4>
-                             <div class="chart-container h-48">
+                             <h4 class="text-lg font-bold text-center mb-2">Insoddisfazione Retributiva</h4>
+                            <div class="chart-container">
+                                <canvas id="pharmacistSatisfactionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doctorsContent" class="tab-content hidden">
+                     <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Medici di Base al Limite</h3>
+                            <p class="text-gray-700 mb-2">Il sistema sanitario nazionale affronta una grave carenza di medici di medicina generale, con un carico di pazienti insostenibile e una popolazione che invecchia. Le soluzioni digitali non sono più un'opzione, ma una necessità.</p>
+                             <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Carenza attuale di **5.500** medici.</li>
+                                <li>Proiezione del deficit a **10.000**.</li>
+                                <li>L'interoperabilità del Fascicolo Sanitario Elettronico (FSE) rimane una sfida chiave.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-center mb-2">Carenza Prevista Medici di Base</h4>
+                            <div class="chart-container">
                                 <canvas id="doctorShortageChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white/10 rounded-lg p-6 shadow-xl flex flex-col">
-                    <h3 class="text-2xl font-bold mb-4 text-center">L'Onere per Pazienti e Caregiver</h3>
-                    <p class="text-center mb-6">I pazienti cercano un ruolo più attivo e soluzioni comode, mentre la non aderenza ai trattamenti ha costi enormi.</p>
-                    <div class="flex-grow grid grid-cols-1 gap-8 content-center">
-                        <div class="kpi-card rounded-lg p-6 text-center">
-                            <span class="text-4xl font-black">€1,25 Mld / Anno</span>
-                            <span class="block mt-2 text-lg">Costo della non aderenza alla terapia in Europa</span>
+                <div id="patientsContent" class="tab-content hidden">
+                    <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Pazienti e Caregiver: Nuovi Protagonisti</h3>
+                            <p class="text-gray-700 mb-2">I pazienti sono sempre più informati e desiderano un ruolo attivo nel loro percorso di cura. I caregiver, spesso familiari, affrontano un carico psicologico e fisico enorme. La tecnologia può offrire supporto, engagement e migliorare l'aderenza terapeutica.</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Costo della non aderenza alla terapia in EU: **€1.25 Miliardi/anno**.</li>
+                                <li>I caregiver subiscono un disagio psicologico simile a quello dei pazienti.</li>
+                                <li>L'AI può ridurre gli errori medici e migliorare l'accesso alle cure.</li>
+                            </ul>
                         </div>
-                         <div class="kpi-card rounded-lg p-6 text-center">
-                             <span class="text-4xl font-black">>$22 Mln</span>
-                            <span class="block mt-2 text-lg">Mercato globale Patient Engagement (Stima 2027)</span>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg p-4 text-center">
-                           <p class="font-bold text-lg accent-text">I caregiver affrontano un disagio psicologico e fisico simile a quello dei pazienti, con un supporto formale spesso insufficiente.</p>
+                        <div class="text-center p-8 bg-slate-100 rounded-lg">
+                            <div class="text-4xl md:text-5xl font-bold text-[#8D99AE]">€1.25 Mld</div>
+                            <p class="mt-2 text-gray-600">Costo annuale della non aderenza terapeutica in Europa, una sfida che l'engagement digitale può aiutare a risolvere.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <section id="solutions" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">La Soluzione Tecnologica ai Bisogni Rilevati</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white/10 p-6 rounded-lg shadow-xl text-center">
-                    <div class="text-6xl mb-4 accent-text">🤖</div>
-                    <h3 class="text-2xl font-bold mb-2">Automazione</h3>
-                    <p>Riduce il carico di lavoro in farmacia, liberando tempo per la consulenza al paziente, ottimizza la logistica e riduce lo stress del personale.</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded-lg shadow-xl text-center">
-                    <div class="text-6xl mb-4 accent-text">📍</div>
-                    <h3 class="text-2xl font-bold mb-2">Geolocalizzazione</h3>
-                    <p>Ottimizza l'assistenza domiciliare, traccia la catena del freddo per farmaci e vaccini, e guida i pazienti all'interno delle strutture sanitarie (wayfinding).</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded-lg shadow-xl text-center">
-                    <div class="text-6xl mb-4 accent-text">🧠</div>
-                    <h3 class="text-2xl font-bold mb-2">Intelligenza Artificiale</h3>
-                    <p>Accelera la scoperta di farmaci (fino al -60% tempi preclinici), personalizza le terapie e migliora l'engagement del paziente con chatbot e analisi predittive.</p>
-                </div>
+
             </div>
         </section>
 
-        <section id="strategy" class="text-center">
-            <h2 class="text-3xl font-bold mb-4">Il Percorso Strategico per Impronta Advance</h2>
-            <p class="max-w-3xl mx-auto mb-8 text-lg">Posizionarsi come leader nell'innovazione farmaceutica richiede di capitalizzare sulle tendenze emergenti e scegliere il giusto modello di crescita.</p>
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="bg-gray-800 rounded-lg p-6 shadow-xl">
-                    <h3 class="text-2xl font-bold mb-4 accent-text">Opzioni di Crescita</h3>
-                    <ul class="space-y-4 text-left">
-                        <li class="flex items-start">
-                            <span class="text-teal-400 mr-3">🤝</span>
-                            <div>
-                                <h4 class="font-bold">Partnership Strategiche</h4>
-                                <p>Accelerano l'ingresso nel mercato e condividono rischi e costi, sfruttando competenze complementari.</p>
-                            </div>
-                        </li>
-                         <li class="flex items-start">
-                            <span class="text-teal-400 mr-3">💡</span>
-                            <div>
-                                <h4 class="font-bold">Investimento Interno</h4>
-                                <p>Costruisce un vantaggio competitivo duraturo, garantisce il controllo sulla proprietà intellettuale e beneficia dei crediti d'imposta per la R&S.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="bg-gray-800 rounded-lg p-6 shadow-xl">
-                    <h3 class="text-2xl font-bold mb-4 accent-text">Tendenze Future da Cavalcare</h3>
-                    <ul class="space-y-2 text-left">
-                        <li class="font-semibold">▶ Terapie Digitali (DTx)</li>
-                        <li class="font-semibold">▶ AI nella scoperta di nuove molecole</li>
-                        <li class="font-semibold">▶ Dati del Mondo Reale (RWE) e Patient Engagement</li>
-                        <li class="font-semibold">▶ Sostenibilità e Interoperabilità dei dati</li>
-                    </ul>
+        <section id="solutions" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Le Leve Tecnologiche per l'Innovazione</h2>
+                 <p class="max-w-3xl mx-auto text-lg text-center text-gray-700 mb-12">
+                   Per rispondere ai bisogni identificati, Impronta Advance può sviluppare soluzioni basate su tre pilastri tecnologici fondamentali, creando valore tangibile per ogni attore dell'ecosistema.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6 border rounded-lg shadow-sm">
+                        <div class="text-5xl mb-4">🤖</div>
+                        <h3 class="text-2xl font-bold mb-2">Automazione</h3>
+                        <p class="text-gray-600">Riduce il carico di lavoro in farmacia e nella logistica, ottimizza la gestione delle scorte e libera tempo prezioso per i professionisti, migliorando la qualità del servizio.</p>
+                    </div>
+                     <div class="text-center p-6 border rounded-lg shadow-sm">
+                        <div class="text-5xl mb-4">📍</div>
+                        <h3 class="text-2xl font-bold mb-2">Geolocalizzazione</h3>
+                        <p class="text-gray-600">Ottimizza l'assistenza domiciliare, traccia la catena del freddo per farmaci e vaccini, e guida i pazienti all'interno delle strutture sanitarie (wayfinding).</p>
+                    </div>
+                     <div class="text-center p-6 border rounded-lg shadow-sm">
+                        <div class="text-5xl mb-4">🧠</div>
+                        <h3 class="text-2xl font-bold mb-2">Intelligenza Artificiale</h3>
+                        <p class="text-gray-600">Accelera la R&S, personalizza le terapie, migliora l'engagement dei pazienti con chatbot e analisi predittive, e supporta le decisioni cliniche.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="text-center p-6 mt-12 bg-gray-900">
-        <p>&copy; 2025 Impronta Advance. Un'analisi strategica per l'innovazione nel settore farmaceutico.</p>
+    <footer class="bg-[#3D405B] text-white mt-16">
+        <div class="container mx-auto p-8 text-center">
+            <h3 class="text-2xl font-bold mb-4">La Vostra Prossima Innovazione Inizia Qui</h3>
+            <p class="max-w-2xl mx-auto mb-6">Impronta Advance è posizionata per essere il vostro partner strategico, trasformando i bisogni non espressi in soluzioni innovative e di impatto. Contattateci per esplorare come possiamo costruire insieme il futuro della salute.</p>
+            <p class="text-sm text-gray-400">&copy; 2025 Impronta Advance. Tutti i diritti riservati.</p>
+        </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartColors = {
+                primary: '#8D99AE', // Dusty Blue
+                secondary: '#3D405B', // Slate Blue
+                background: 'rgba(234, 221, 202, 0.3)', // Almond Transparent
+                grid: 'rgba(61, 64, 91, 0.1)',
+                text: '#3D405B'
+            };
+
             const tooltipTitleCallback = {
                 plugins: {
                     tooltip: {
@@ -272,107 +260,125 @@
                                 let label = item.chart.data.labels[item.dataIndex];
                                 if (Array.isArray(label)) {
                                   return label.join(' ');
-                                } else {
-                                  return label;
                                 }
+                                return label;
                             }
+                        }
+                    },
+                     legend: {
+                        labels: {
+                            color: chartColors.text
                         }
                     }
                 }
             };
-            
-            const brilliantBlues = {
-                deep: '#004AAD',
-                bright: '#0079C2',
-                light: '#00A7E1',
-                sky: '#88D9F2',
-                white: '#FFFFFF',
-                background: 'rgba(136, 217, 242, 0.2)'
-            };
 
-            const pharmacistCtx = document.getElementById('pharmacistChart');
-            if(pharmacistCtx) {
-                new Chart(pharmacistCtx, {
+            function createPharmacistSatisfactionChart() {
+                const ctx = document.getElementById('pharmacistSatisfactionChart')?.getContext('2d');
+                if (!ctx) return;
+                new Chart(ctx, {
                     type: 'doughnut',
                     data: {
                         labels: ['Insoddisfatti della retribuzione', 'Soddisfatti o non specificato'],
                         datasets: [{
-                            label: '% di Farmacisti',
+                            label: 'Percentuale Farmacisti',
                             data: [74, 26],
-                            backgroundColor: [
-                                brilliantBlues.bright,
-                                brilliantBlues.background
-                            ],
-                            borderColor: [
-                                brilliantBlues.sky,
-                                'rgba(0,0,0,0)'
-                            ],
-                            borderWidth: 2
+                            backgroundColor: [chartColors.primary, chartColors.background],
+                            borderColor: ['#FFFFFF', '#FFFFFF'],
+                            borderWidth: 4,
+                            hoverOffset: 4
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        ...tooltipTitleCallback,
-                        plugins: {
-                            ...tooltipTitleCallback.plugins,
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: brilliantBlues.white
-                                }
-                            }
-                        }
+                        ...tooltipTitleCallback
                     }
                 });
             }
 
-            const doctorShortageCtx = document.getElementById('doctorShortageChart');
-            if(doctorShortageCtx) {
-                new Chart(doctorShortageCtx, {
+            function createDoctorShortageChart() {
+                const ctx = document.getElementById('doctorShortageChart')?.getContext('2d');
+                if (!ctx) return;
+                new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Attualmente Mancanti', 'Proiezione Deficit'],
+                        labels: ['Carenza Attuale', ['Proiezione', 'Deficit Futuro']],
                         datasets: [{
                             label: 'Numero di Medici di Base',
                             data: [5500, 10000],
-                            backgroundColor: [
-                                brilliantBlues.bright,
-                                brilliantBlues.deep
-                            ],
-                            borderColor: [
-                                brilliantBlues.sky,
-                                brilliantBlues.bright
-                            ],
-                            borderWidth: 2
+                            backgroundColor: [chartColors.primary, chartColors.secondary],
+                            borderRadius: 4
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         ...tooltipTitleCallback,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { color: brilliantBlues.white },
-                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                            },
-                            x: {
-                                ticks: { color: brilliantBlues.white },
-                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                            }
-                        },
                         plugins: {
                             ...tooltipTitleCallback.plugins,
                             legend: {
                                 display: false
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: chartColors.grid },
+                                ticks: { color: chartColors.text }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: chartColors.text }
                             }
                         }
                     }
                 });
             }
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+            let activeChartInitializers = {
+                'pharmacists': createPharmacistSatisfactionChart,
+                'doctors': createDoctorShortageChart,
+                'patients': null 
+            };
+            
+            let initializedCharts = {};
+
+            function activateTab(tabId) {
+                 tabs.forEach(t => {
+                    if(t.dataset.tab === tabId) {
+                        t.classList.add('active');
+                    } else {
+                        t.classList.remove('active');
+                    }
+                 });
+                 contents.forEach(c => {
+                    if (c.id === `${tabId}Content`) {
+                        c.classList.remove('hidden');
+                    } else {
+                        c.classList.add('hidden');
+                    }
+                 });
+
+                if (activeChartInitializers[tabId] && !initializedCharts[tabId]) {
+                    setTimeout(() => { // Ensure canvas is visible before drawing
+                        activeChartInitializers[tabId]();
+                        initializedCharts[tabId] = true;
+                    }, 0);
+                }
+            }
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    activateTab(tab.dataset.tab);
+                });
+            });
+            
+            activateTab('pharmacists');
+
         });
     </script>
-
 </body>
 </html>
